@@ -1,0 +1,21 @@
+import random
+from typing import List, Dict
+
+class StegDJSelector:
+
+    def __init__(self, library: Dict):
+        self.library = library
+
+    def get_tracks(self, styles: List[str], mood: str = None, max_results: int = 40) -> List[Dict]:
+        """Select pool based on requested genres & optional mood filtering"""
+
+        # combine all songs matching styles
+        pool = [song for song in self.library["songs"] if song["style"] in styles]
+
+        # optional mood filtering
+        if mood:
+            pool = [s for s in pool if mood in s["moods"] or "any" in s["moods"]]
+
+        # shuffle ensures variety
+        random.shuffle(pool)
+        return pool[:max_results]
