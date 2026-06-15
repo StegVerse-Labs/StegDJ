@@ -1,0 +1,21 @@
+name: Test Readiness
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check repository baseline
+        run: |
+          test -f README.md || test -f README.MD
+          find .github/workflows -name '*.ym' -print -quit | (! grep .)
+          echo "TEST READINESS PASSED"
