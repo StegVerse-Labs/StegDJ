@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "PlaybackReceipt",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["receipt_id", "intent_ref", "played_at", "environment_id", "event_id", "result_state_ref", "exceptions"],
+  "properties": {
+    "receipt_id": { "type": "string" },
+    "intent_ref": { "type": "string" },
+    "selection_ref": { "type": "string" },
+    "composition_ref": { "type": "string" },
+    "played_at": { "type": "string" },
+    "environment_id": { "type": "string" },
+    "event_id": { "type": "string" },
+    "result_state_ref": { "type": "string" },
+    "exceptions": { "type": "array", "items": { "type": "string" } }
+  }
+}
