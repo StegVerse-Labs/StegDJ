@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ListenerEventIntent",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["intent_id", "declared_by", "authority_ref", "listener_scope", "target_state_ref", "allowed_music_modes", "validity_window"],
+  "properties": {
+    "intent_id": { "type": "string" },
+    "declared_by": { "type": "string" },
+    "authority_ref": { "type": "string" },
+    "listener_scope": { "type": "string" },
+    "environment_id": { "type": "string" },
+    "event_id": { "type": "string" },
+    "current_state_ref": { "type": "string" },
+    "target_state_ref": { "type": "string" },
+    "allowed_music_modes": { "type": "array", "items": { "type": "string" } },
+    "disallowed_music_modes": { "type": "array", "items": { "type": "string" } },
+    "validity_window": { "type": "object" }
+  }
+}
