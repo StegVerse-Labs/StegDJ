@@ -1,0 +1,11 @@
+{
+  "receipt_id": "receipt_playback_christmas_example_001",
+  "intent_ref": "intent_christmas_music_example_001",
+  "selection_ref": "music_selection_christmas_example_001",
+  "composition_ref": "composition_christmas_example_001",
+  "played_at": "example-only",
+  "environment_id": "home_living_room_example",
+  "event_id": "christmas_event_example",
+  "result_state_ref": "state_christmas_room_example_after_music_001",
+  "exceptions": []
+}
