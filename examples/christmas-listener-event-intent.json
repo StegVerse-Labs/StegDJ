@@ -1,0 +1,22 @@
+{
+  "intent_id": "intent_christmas_music_example_001",
+  "declared_by": "event_host_example",
+  "authority_ref": "host_authority_example",
+  "listener_scope": "event_room",
+  "environment_id": "home_living_room_example",
+  "event_id": "christmas_event_example",
+  "current_state_ref": "state_christmas_room_example_001",
+  "target_state_ref": "target_christmas_room_example_001",
+  "allowed_music_modes": [
+    "existing_music_sequence",
+    "adaptive_music_sequence",
+    "governed_composition_request"
+  ],
+  "disallowed_music_modes": [
+    "identity_linked_personalization_without_opt_in"
+  ],
+  "validity_window": {
+    "start": "event_start_example",
+    "end": "event_end_example"
+  }
+}
