@@ -1,0 +1,14 @@
+{
+  "request_id": "music_selection_christmas_example_001",
+  "intent_ref": "intent_christmas_music_example_001",
+  "catalog_scope": "event_safe_catalog_or_governed_generated_music",
+  "preference_refs": [
+    "host_declared_christmas_like_positive_state"
+  ],
+  "standing_class": "pending_governance_method",
+  "admissibility_scope": [
+    "music_environment_adaptation_example"
+  ],
+  "retention_scope": "example_only",
+  "sharing_state": "local_or_live_witnessed_required"
+}
