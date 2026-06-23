@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "MusicSelectionRequest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["request_id", "intent_ref", "catalog_scope", "preference_refs", "standing_class", "admissibility_scope", "retention_scope", "sharing_state"],
+  "properties": {
+    "request_id": { "type": "string" },
+    "intent_ref": { "type": "string" },
+    "catalog_scope": { "type": "string" },
+    "preference_refs": { "type": "array", "items": { "type": "string" } },
+    "standing_class": { "type": "string" },
+    "admissibility_scope": { "type": "array", "items": { "type": "string" } },
+    "retention_scope": { "type": "string" },
+    "sharing_state": { "type": "string" }
+  }
+}
