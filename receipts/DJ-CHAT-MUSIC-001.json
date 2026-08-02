@@ -1,0 +1,39 @@
+{
+  "goal_id": "DJ-CHAT-MUSIC-001",
+  "repository": "StegVerse-Labs/StegDJ",
+  "branch": "main",
+  "state": "MERGED_INTO_CANONICAL_WORKSTREAM",
+  "recorded_at": "2026-08-02T05:41:00-05:00",
+  "canonical_continuation": {
+    "repository": "StegVerse-Labs/Site",
+    "handoff": "docs/SITE_MIRROR_HANDOFF.md",
+    "surfaces": ["ecosystem-chat.html", "ecosystem-music.html"],
+    "runtime_owner": "StegVerse-org/LLM-adapter",
+    "runtime_task": "issue 18"
+  },
+  "transferred_requirements": [
+    "music generation appears as a peer node beside ecosystem chat nodes",
+    "browser sends provider-neutral requests to StegMusic rather than ElevenLabs",
+    "ELEVENLABS_API_KEY remains server-side",
+    "READY playback requires a governed generation receipt and authorized artifact URL or stream token",
+    "blocked, failed, review-required, and superseded states remain visible",
+    "prompt, target state, governance scope, provenance, and compensation metadata are preserved"
+  ],
+  "implemented_here": [
+    "contracts/chat_music_node.schema.json",
+    "docs/CHAT_MUSIC_NODE_INTEGRATION.md",
+    ".github/workflows/validate-chat-music-node.yml"
+  ],
+  "commits": [
+    "5cd9209bf8cc316d4a46471a7b17c6dabd24a3dc",
+    "b623f35a7105f70b13d7d4d458a4f923d7b423a4",
+    "9cecf97969f681b5fb5523a9dc5eba7129a87e12"
+  ],
+  "validation": {
+    "static_contract_inspection": "PASS",
+    "workflow": "INSTALLED_NOT_OBSERVED",
+    "site_integration": "NOT_MUTATED_ACTIVE_SITE_CLAIMS_PRESERVED",
+    "runtime_playback": "NOT_OBSERVED"
+  },
+  "next_executable_task": "The Site orchestration lane consumes this contract when its active claims admit the direct StegMusic launcher; the LLM-adapter runtime lane supplies the authorized provider endpoint."
+}
