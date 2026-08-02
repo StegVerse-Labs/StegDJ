@@ -1,0 +1,27 @@
+name: Validate chat music node
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Validate JSON syntax
+        run: python -m json.tool contracts/chat_music_node.schema.json >/dev/null
+      - name: Verify secret boundary
+        run: |
+          if grep -R "ELEVENLABS_API_KEY" --exclude='*.md' --exclude='*.yml' --exclude='*.yaml' .; then
+            echo "Provider secret reference found in executable StegDJ content"
+            exit 1
+          fi
