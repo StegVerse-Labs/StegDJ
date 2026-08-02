@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://stegverse.org/schemas/chat-music-node.json",
+  "title": "StegDJ Chat Music Node",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["node_id", "request_id", "state", "target_state", "governance_scope"],
+  "properties": {
+    "node_id": {"type": "string", "minLength": 1, "maxLength": 256},
+    "request_id": {"type": "string", "minLength": 8, "maxLength": 128},
+    "state": {
+      "type": "string",
+      "enum": ["IDLE", "REQUESTED", "GENERATING", "READY", "BLOCKED", "REVIEW_REQUIRED", "FAILED", "SUPERSEDED"]
+    },
+    "prompt": {"type": "string", "maxLength": 4100},
+    "music_length_ms": {"type": "integer", "minimum": 3000, "maximum": 600000},
+    "target_state": {"type": "string", "minLength": 1, "maxLength": 256},
+    "governance_scope": {"type": "string", "minLength": 1, "maxLength": 256},
+    "stegmusic_endpoint": {"type": "string", "format": "uri-reference"},
+    "composition_receipt_id": {"type": "string"},
+    "generation_receipt_id": {"type": "string"},
+    "artifact_url": {"type": "string", "format": "uri-reference"},
+    "stream_token": {"type": "string"},
+    "content_type": {"type": "string"},
+    "error_code": {"type": "string"},
+    "error_message": {"type": "string"},
+    "provenance": {"type": "object"},
+    "compensation": {"type": "object"}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"state": {"const": "READY"}}},
+      "then": {
+        "required": ["generation_receipt_id", "content_type"],
+        "anyOf": [
+          {"required": ["artifact_url"]},
+          {"required": ["stream_token"]}
+        ]
+      }
+    },
+    {
+      "if": {"properties": {"state": {"enum": ["BLOCKED", "REVIEW_REQUIRED", "FAILED"]}}},
+      "then": {"required": ["error_code", "error_message"]}
+    }
+  ]
+}
