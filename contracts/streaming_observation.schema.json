@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://stegverse.org/schemas/streaming_observation.schema.json",
+  "title": "StegDJ Streaming Observation",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "observation_id",
+    "cohort_id",
+    "service",
+    "window_start",
+    "window_end",
+    "source_authorization_ref",
+    "metrics",
+    "audience_response_grants_authority"
+  ],
+  "properties": {
+    "observation_id": {"type": "string", "minLength": 1},
+    "cohort_id": {"type": "string", "minLength": 1},
+    "service": {"type": "string", "minLength": 1},
+    "window_start": {"type": "string", "format": "date-time"},
+    "window_end": {"type": "string", "format": "date-time"},
+    "source_authorization_ref": {"type": "string", "minLength": 1},
+    "source_kind": {
+      "type": "string",
+      "enum": ["ARTIST_ANALYTICS", "DISTRIBUTOR_ANALYTICS", "PUBLIC_METADATA", "OTHER_AUTHORIZED"]
+    },
+    "metrics": {
+      "type": "object",
+      "additionalProperties": {
+        "oneOf": [
+          {"type": "number"},
+          {"const": "UNKNOWN"}
+        ]
+      },
+      "minProperties": 1
+    },
+    "normalization": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "release_age_hours": {"oneOf": [{"type": "number", "minimum": 0}, {"const": "UNKNOWN"}]},
+        "estimated_exposure": {"oneOf": [{"type": "number", "minimum": 0}, {"const": "UNKNOWN"}]},
+        "promotion_level": {"oneOf": [{"type": "number", "minimum": 0}, {"const": "UNKNOWN"}]},
+        "method": {"type": "string"}
+      }
+    },
+    "promotion_recommendation": {
+      "type": "string",
+      "enum": ["PROMOTE_STATE_FAMILY", "CONTINUE_OBSERVING", "SUPERSEDE", "REVIEW_REQUIRED", "NO_RECOMMENDATION"]
+    },
+    "audience_response_grants_authority": {"const": false},
+    "notes": {"type": "array", "items": {"type": "string"}}
+  }
+}
