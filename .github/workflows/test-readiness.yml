@@ -1,21 +1,43 @@
-name: Test Readiness
+name: Test Readiness - no non-TV/TVC credentials
 
 on:
   push:
   pull_request:
   workflow_dispatch:
 
-permissions:
-  contents: read
+permissions: {}
 
 jobs:
   smoke:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v4
-      - name: Check repository baseline
+      - name: Assert credential-clean validation environment
+        shell: bash
         run: |
+          set -euo pipefail
+          for name in GITHUB_TOKEN GH_TOKEN GITHUB_PAT STEGVERSE_GITHUB_TOKEN TVC_EPHEMERAL_GITHUB_TOKEN; do
+            if [ -n "${!name-}" ]; then
+              echo "Unexpected credential environment: $name" >&2
+              exit 1
+            fi
+          done
+      - name: Fetch exact public source anonymously
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir source
+          cd source
+          git init -q
+          git remote add origin "https://github.com/${GITHUB_REPOSITORY}.git"
+          git -c credential.helper= -c http.extraheader= fetch --depth=1 origin "${GITHUB_SHA}"
+          git checkout -q --detach FETCH_HEAD
+          test "$(git rev-parse HEAD)" = "${GITHUB_SHA}"
+      - name: Check repository baseline
+        shell: bash
+        working-directory: source
+        run: |
+          set -euo pipefail
           test -f README.md || test -f README.MD
           find .github/workflows -name '*.ym' -print -quit | (! grep .)
-          echo "TEST READINESS PASSED"
+          echo "TEST_READINESS_CREDENTIAL_CLEAN=PASS"
