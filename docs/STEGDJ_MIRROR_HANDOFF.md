@@ -27,6 +27,8 @@
 
 ### DJ-SR-001
 - `docs/STREAMING_DEVELOPMENT_LOOP.md`
+- `contracts/release_cohort.schema.json`
+- `contracts/streaming_observation.schema.json`
 - `docs/STEGDJ_MIRROR_HANDOFF.md`
 - upstream `StegVerse-Labs/StegMusic/contracts/sympathetic_recognition_profile.schema.json`
 
@@ -93,12 +95,20 @@ This is an inference from the public chronology in which `BLACK WATER DAMNED` (2
 | Task ID | Destination | State | Validation | Next action |
 |---|---|---|---|---|
 | DJ-SR-001A | `docs/STREAMING_DEVELOPMENT_LOOP.md` | COMPLETE | design installed | maintain with implementation |
-| DJ-SR-001B | `contracts/release_cohort.schema.json` | NOT_STARTED | none | install machine-readable cohort contract |
-| DJ-SR-001C | `contracts/streaming_observation.schema.json` | NOT_STARTED | none | install platform/time-window observation contract |
+| DJ-SR-001B | `contracts/release_cohort.schema.json` | COMPLETE | schema installed | add deterministic validator/tests |
+| DJ-SR-001C | `contracts/streaming_observation.schema.json` | COMPLETE | schema installed | add deterministic validator/tests |
 | DJ-SR-001D | chat/music-node profile binding | NOT_STARTED | none | bind StegMusic profile hash + gate state |
 | DJ-SR-001E | cohort/observation receipts | NOT_STARTED | none | install receipts and validation |
 | DJ-SR-001F | authorized analytics adapters | BLOCKED | none | identify authorized platform/distributor interfaces; use TV/TVC authority only |
 | DJ-SR-001G | controlled release experiment | BLOCKED | none | requires cleared artifacts, release authority, and live analytics path |
+
+## Contract behavior installed
+
+### `release_cohort.schema.json`
+Binds cohort ID, state family, candidate receipt IDs, release window, authorized destinations, hypothesis, controlled mutations, approved metrics, observation window, promotion rule, stop conditions, and authority flags.
+
+### `streaming_observation.schema.json`
+Binds each observation to a cohort, service, exact time window, authorized source reference, metric map, normalization data, and promotion recommendation. Missing/unavailable observations may be represented as `UNKNOWN`. `audience_response_grants_authority` is structurally fixed to `false`.
 
 ## Cross-repository dependencies
 - Composition/generation: `StegVerse-Labs/StegMusic`.
@@ -108,11 +118,16 @@ This is an inference from the public chronology in which `BLACK WATER DAMNED` (2
 - Pertinent release/integration state must eventually propagate to `StegVerse-Labs/Site`, `GCAT-BCAT-Engine/Publisher`, `StegVerse-Labs/admissibility-wiki`, and `StegVerse-002/stegguardian-wiki` when the work reaches release/tagging state.
 
 ## Validation
-Existing required JSON validation remains applicable to the chat/music contract when installed.
+Immediate local validation targets:
 
-New DJ-SR-001 validation must eventually include:
-- JSON-schema validation of release cohorts and streaming observations;
-- deterministic `UNKNOWN` handling for missing metrics;
+```bash
+python -m json.tool contracts/release_cohort.schema.json >/dev/null
+python -m json.tool contracts/streaming_observation.schema.json >/dev/null
+```
+
+Still required:
+- deterministic schema/policy validators and tests;
+- deterministic `UNKNOWN` handling;
 - receipt hash binding to state-family/profile IDs;
 - fail-closed rejection of BLOCKED/REVIEW_REQUIRED StegMusic candidates;
 - secret scanning proving no non-TV/TVC credentials are introduced;
@@ -130,11 +145,12 @@ Work counts complete only when installed in the correct repository, committed/ap
 - Goal activation: 5%.
 
 ### DJ-SR-001 — reset on new goal
-- Planned deliverables currently tracked: 7.
-- Developed/installed: 1/7 (14%).
-- Validated at strongest intended path: 0/7 (0%).
-- Upstream StegMusic contract dependency: installed, downstream binding pending.
-- Goal activation: 10%.
+- Planned tracked implementation tasks: 7.
+- Completed tasks: 3/7 (43%).
+- Developed files: 3 substantive new files plus canonical handoff reconciliation.
+- Validation: schemas installed; deterministic validator/test execution remains unimplemented.
+- Upstream StegMusic recognition contract: installed; downstream binding remains.
+- Goal activation: 25%.
 
 ## Archive state
-DJ-SR-001 is not complete. The goal and remaining tasks are durable in this handoff, but active implementation remains appropriate until cohort/observation contracts, receipt binding, chat-node profile binding, and an authorized analytics/release experiment path are installed or explicitly transferred to active workers.
+DJ-SR-001 is not complete. The goal and remaining tasks are durable in this handoff, but active implementation remains appropriate until validators/tests, chat-node profile binding, receipts, and an authorized analytics/release experiment path are installed or explicitly transferred to active workers.
