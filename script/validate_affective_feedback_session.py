@@ -31,6 +31,19 @@ def validate(session: Dict[str, Any]) -> None:
 
     policy = session.get("orchestration_policy") or {}
     transitions = session["transition_sequence"]
+    stimulus_ids = set(session["stimulus_receipt_ids"])
+    observation_refs = set(session["observation_refs"])
+
+    for index, step in enumerate(transitions):
+        if step["stimulus_receipt_id"] not in stimulus_ids:
+            raise AffectiveSessionError(
+                f"transition {index} references undeclared stimulus receipt"
+            )
+        unknown_observations = sorted(set(step.get("observation_refs", ())) - observation_refs)
+        if unknown_observations:
+            raise AffectiveSessionError(
+                f"transition {index} references undeclared observations: {', '.join(unknown_observations)}"
+            )
 
     blocked = any(step["status"] == "BLOCKED" for step in transitions)
     review = any(step["status"] == "REVIEW_REQUIRED" for step in transitions)
