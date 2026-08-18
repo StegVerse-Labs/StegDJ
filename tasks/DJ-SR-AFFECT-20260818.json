@@ -1,0 +1,53 @@
+{
+  "schema_version": "STEGVERSE-TASK-v1",
+  "task_id": "DJ-SR-AFFECT-20260818",
+  "title": "StegDJ streaming development and affective transition orchestration",
+  "repository": "StegVerse-Labs/StegDJ",
+  "branch": "main",
+  "canonical_handoff": "docs/STEGDJ_MIRROR_HANDOFF.md",
+  "originating_goal": "Use StegDJ with StegMusic to develop sympathetic recognition and subtle affective-response understanding using traditional streaming observations and consented multimodal sensors, with StegVerse primary and third parties fallback-only.",
+  "claimant": "current-session-stegdj-streaming-affective",
+  "claim_created_at": "2026-08-18T10:47:00-05:00",
+  "claim_expires_or_releases_when": "All session-specific source requirements are implemented or transferred; credential-clean workflow observation, Site consumption, and optional external route authority have named durable owners and no unique chat-only execution remains.",
+  "credential_authority": "TV/TVC",
+  "non_tv_tvc_secret_or_token_allowed": false,
+  "provider_policy": {
+    "primary": "STEGVERSE_NATIVE",
+    "third_party_primary_allowed": false,
+    "direct_platform_api_required": false
+  },
+  "source_state": {
+    "chat_music_node_recognition_binding": "COMPLETE",
+    "streaming_release_cohort_contract": "COMPLETE",
+    "streaming_observation_contract": "COMPLETE",
+    "credentialless_streaming_observation_ingest": "COMPLETE",
+    "affective_feedback_contract": "COMPLETE",
+    "affective_feedback_validator_tests": "COMPLETE_IMPLEMENTED",
+    "credential_clean_hosted_validation_workflow": "COMPLETE_INSTALLED_OBSERVATION_PENDING"
+  },
+  "machine_owned_continuation": [
+    {
+      "task": "DJ-SR-PUBLIC-VALIDATION",
+      "owner": "StegDJ credential-clean GitHub workflow",
+      "surface": ".github/workflows/validate-chat-music-node.yml",
+      "state": "MACHINE_OWNED_OBSERVATION_PENDING",
+      "release_condition": "An exact-SHA workflow run completes successfully using anonymous public fetch, permissions {}, no credential environment, schema checks, tests, and credential scan."
+    },
+    {
+      "task": "DJ-SR-SITE-CONSUMPTION",
+      "owner": "StegVerse-Labs/Site canonical orchestration lane",
+      "surface": "StegVerse-Labs/Site/docs/SITE_MIRROR_HANDOFF.md",
+      "state": "MERGED_INTO_CANONICAL_WORKSTREAM",
+      "release_condition": "The active Site handoff admits a non-conflicting StegDJ/StegMusic integration and live playback/observation evidence is recorded."
+    },
+    {
+      "task": "DJ-SR-OPTIONAL-PLATFORM-API",
+      "owner": "StegVerse-Labs/TVC provider/credential authority",
+      "surface": "StegVerse-Labs/TVC/docs/PROVIDER_PRECEDENCE_MIRROR_HANDOFF.md",
+      "state": "OPTIONAL_BLOCKED_UNTIL_ADMITTED",
+      "release_condition": "A platform/distributor API is explicitly selected and TVC admits a scoped capability; bounded export ingestion remains available without this dependency."
+    }
+  ],
+  "authority_effect": false,
+  "activation_effect": false
+}
