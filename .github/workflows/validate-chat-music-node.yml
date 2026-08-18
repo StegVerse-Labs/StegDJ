@@ -1,4 +1,4 @@
-name: Validate chat music node
+name: Validate StegDJ music and affective contracts - no non-TV/TVC credentials
 
 on:
   push:
@@ -6,22 +6,55 @@ on:
   pull_request:
   workflow_dispatch:
 
-permissions:
-  contents: read
+permissions: {}
 
 jobs:
   validate:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-      - name: Validate JSON syntax
-        run: python -m json.tool contracts/chat_music_node.schema.json >/dev/null
-      - name: Verify secret boundary
+      - name: Assert credential-clean validation environment
+        shell: bash
         run: |
-          if grep -R "ELEVENLABS_API_KEY" --exclude='*.md' --exclude='*.yml' --exclude='*.yaml' .; then
-            echo "Provider secret reference found in executable StegDJ content"
+          set -euo pipefail
+          for name in GITHUB_TOKEN GH_TOKEN GITHUB_PAT STEGVERSE_GITHUB_TOKEN TVC_EPHEMERAL_GITHUB_TOKEN; do
+            if [ -n "${!name-}" ]; then
+              echo "Unexpected credential environment: $name" >&2
+              exit 1
+            fi
+          done
+      - name: Fetch exact public source anonymously
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir source
+          cd source
+          git init -q
+          git remote add origin "https://github.com/${GITHUB_REPOSITORY}.git"
+          git -c credential.helper= -c http.extraheader= fetch --depth=1 origin "${GITHUB_SHA}"
+          git checkout -q --detach FETCH_HEAD
+          test "$(git rev-parse HEAD)" = "${GITHUB_SHA}"
+      - name: Install repository validation dependency
+        shell: bash
+        run: python3 -m pip install --disable-pip-version-check -r source/requirements.txt
+      - name: Validate schemas and tests
+        shell: bash
+        working-directory: source
+        run: |
+          set -euo pipefail
+          python3 -m json.tool contracts/chat_music_node.schema.json >/dev/null
+          python3 -m json.tool contracts/release_cohort.schema.json >/dev/null
+          python3 -m json.tool contracts/streaming_observation.schema.json >/dev/null
+          python3 -m json.tool contracts/affective_feedback_session.schema.json >/dev/null
+          python3 -m unittest discover -s tests -v
+      - name: Verify provider and credential boundary
+        shell: bash
+        working-directory: source
+        run: |
+          set -euo pipefail
+          if grep -RInE 'ELEVENLABS_API_KEY|xi-api-key|GITHUB_TOKEN|GH_TOKEN|GITHUB_PAT' \
+            --include='*.py' --include='*.js' --include='*.html' --include='*.css' .; then
+            echo "Provider or repository credential reference found in StegDJ executable/browser content" >&2
             exit 1
           fi
+          echo "STEGDJ_CREDENTIAL_CLEAN_VALIDATION=PASS"
