@@ -1,156 +1,175 @@
 # StegDJ Mirror Handoff
 
-## Canonical status
+Updated: 2026-08-18T10:47:00-05:00
+Repository: `StegVerse-Labs/StegDJ`
+Branch: `main`
+Canonical handoff: this file
 
-### Goal DJ-CHAT-MUSIC-001 — chat/music integration
-- Active goal: expose governed music generation beside ecosystem chat nodes while delegating composition and raw generation to StegMusic.
-- Repository / branch: `StegVerse-Labs/StegDJ` / `main`.
-- Canonical handoff: this file.
-- Canonical owner: StegDJ orchestration-contract lane.
-- Claim state: CLAIMED_FOR_INTEGRATION.
+## Governing authority
 
-### Goal DJ-SR-001 — streaming development loop
-- Added: 2026-08-18.
-- Active goal: use traditional release/streaming services as governed development-observation surfaces for StegMusic state families while preserving StegDJ's orchestration boundary.
-- Upstream design: `StegVerse-Labs/StegMusic/docs/BURNIN_BRIDGES_CASE_STUDY.md`.
-- Core principle: promote high-performing generalized **state families**, not copied source recordings.
-- Development target: sympathetic recognition without reproduction.
-- No `N seconds is royalty-free` assumption is permitted. Material requiring rights must enter an explicit rights/compensation path.
+```text
+generation primary: STEGVERSE_NATIVE
+third-party generation: FALLBACK_ONLY
+streaming platform API dependency: OPTIONAL
+credential authority: TV/TVC
+NON-TV/TVC secret/token allowed: false
+GitHub token validation/runtime authority: NONE
+observation grants authority: false
+```
 
-## Authoritative files
+## Session goals
 
-### DJ-CHAT-MUSIC-001
-- `README.md`
-- `contracts/chat_music_node.schema.json` (required)
-- `docs/CHAT_MUSIC_NODE_INTEGRATION.md` (required)
-- `receipts/DJ-CHAT-MUSIC-001.json` (required)
+### DJ-CHAT-MUSIC-001 — governed chat/music orchestration
+State: `MERGED_INTO_CANONICAL_WORKSTREAM` for Site consumption, with StegDJ source contract complete.
 
-### DJ-SR-001
+Authoritative StegDJ surfaces:
+- `contracts/chat_music_node.schema.json`
+- `docs/CHAT_MUSIC_NODE_INTEGRATION.md`
+- `receipts/DJ-CHAT-MUSIC-001.json`
+
+Current contract binds StegVerse-native provider precedence, state-family identity, sympathetic-recognition profile/evidence hashes, affective experiment/observation references, consent receipt, generation receipt, playback reference, provenance, compensation, and explicit non-authority fields.
+
+A recognition gate in `REVIEW_REQUIRED` or `BLOCKED` cannot be represented as node READY.
+
+### DJ-SR-001 — traditional streaming services as development observations
+State: `SOURCE_COMPLETE_RELEASED_TO_MACHINE_OWNED_CONTINUATION`.
+
+Authoritative surfaces:
 - `docs/STREAMING_DEVELOPMENT_LOOP.md`
 - `contracts/release_cohort.schema.json`
 - `contracts/streaming_observation.schema.json`
-- `docs/STEGDJ_MIRROR_HANDOFF.md`
-- upstream `StegVerse-Labs/StegMusic/contracts/sympathetic_recognition_profile.schema.json`
+- `script/ingest_streaming_observation.py`
+- `fixtures/streaming/authorized_observation.json`
+- `tests/test_streaming_observation_ingest.py`
 
-## Collision boundaries
-StegDJ owns orchestration, candidate selection, sequencing, playback, cohort experimentation, state-family scoring, feedback routing, and compensation metadata. It does not own raw synthesis, provider credentials, licensing authority, StegMusic provider adapters, or ungoverned mutation of a Site/chat host.
+StegVerse-native observation ingestion is the primary path: an authorized artist/distributor export or bounded public metadata record is schema-validated and hashed locally with `credential_requirement: NONE_FOR_BOUNDED_IMPORT` and `network_required: false`. Missing platform metrics remain `UNKNOWN`.
 
-StegMusic remains responsible for composition/generation/provenance, expression-firewall behavior, sympathetic-recognition profiles, and similarity/reconstruction gates.
+Direct Spotify/Apple Music/distributor APIs are optional convenience integrations, not prerequisites. If selected later, the credential/route is owned by TV/TVC and must not become a silent primary dependency.
 
-No NON-TV/TVC secrets or tokens are to be introduced. TV/TVC remains credential authority.
+### DJ-AFFECT-001 — affective transition orchestration
+State: `SOURCE_COMPLETE_RELEASED_TO_MACHINE_OWNED_CONTINUATION`.
 
-## Required behavior
+Authoritative surfaces:
+- `contracts/affective_feedback_session.schema.json`
+- `script/validate_affective_feedback_session.py`
+- `tests/test_affective_feedback_session.py`
 
-### Existing chat/music path
-- Present music generation as a peer node, not a client-side direct provider call.
-- Send provider-neutral requests to StegMusic.
-- Never expose provider authorization in browser code.
-- Preserve prompt, target state, governance scope, request ID, composition receipt, provider receipt, provenance, and compensation metadata.
-- Playback requires READY plus an authorized artifact URL/stream token.
+Installed behavior:
+- stimulus receipts and observation references must be explicitly declared before a transition may cite them;
+- BLOCKED transition forces blocked/failed/superseded orchestration state;
+- REVIEW_REQUIRED stops adaptive progression;
+- adaptive step limits are enforced;
+- inferred affect cannot self-grant action authority;
+- streaming response cannot self-grant publication authority;
+- sensor observation cannot self-grant licensing authority.
 
-### Streaming development path
-- Accept only READY StegMusic candidates with rights/provenance/similarity evidence.
-- Group experiments by `state_family_id`, not source-track identity.
-- Form governed release cohorts with explicit hypotheses, controlled descriptor mutations, authorized destinations, metrics, observation windows, promotion rules, and stop conditions.
-- Use only authorized artist/distributor analytics and legitimately available public metadata.
-- Do not scrape/download streaming audio into an unlicensed training corpus.
-- Do not fabricate streams, saves, follows, playlist activity, or other engagement.
-- Treat unavailable metrics as `UNKNOWN`, never silently as zero.
-- Audience response is development evidence only; it grants no publication, licensing, custody, or legal authority.
+## Cross-repository architecture
 
-## DJ-SR-001 state model
-- `IDLE`
-- `REQUESTED`
-- `GENERATING`
-- `REVIEW_REQUIRED`
-- `READY`
-- `RELEASED`
-- `OBSERVING`
-- `PROMOTED`
-- `SUPERSEDED`
-- `BLOCKED`
-- `FAILED`
+```text
+StegMusic
+  owns generation + recognition profile + similarity/reconstruction + affective observation semantics
 
-## Development loop
-`state family -> independent candidates -> StegMusic gates -> release cohort -> authorized streaming observations -> normalized outcome -> descriptor-family promotion/mutation -> receipt`
+StegDJ
+  owns sequencing + release cohorts + bounded streaming observations + affective transition orchestration
 
-The BURNIN' BRIDGES case study motivates a second-stage identity step after a state family materially outperforms controls:
+Site
+  owns canonical UI/runtime consumption when its handoff admits integration
 
-`discover resonant state -> observe audience -> reinforce state -> persistent identity/world`
+TV/TVC
+  owns credential/provider/platform route authority
 
-This is an inference from the public chronology in which `BLACK WATER DAMNED` (2026-04-10) preceded `BLACKWATER BILLY` (2026-04-18).
-
-## Execution inventory
-
-### DJ-CHAT-MUSIC-001 preserved inventory
-| Task ID | Destination | State | Next action |
-|---|---|---|---|
-| DJ-CHAT-MUSIC-001A | `contracts/chat_music_node.schema.json` | CLAIMED_FOR_IMPLEMENTATION | install provider-neutral node schema |
-| DJ-CHAT-MUSIC-001B | `docs/CHAT_MUSIC_NODE_INTEGRATION.md` | CLAIMED_FOR_INTEGRATION | install orchestration/security contract |
-| DJ-CHAT-MUSIC-001C | ecosystem chat-page repository | BLOCKED | discover canonical page host |
-| DJ-CHAT-MUSIC-001D | `receipts/DJ-CHAT-MUSIC-001.json` | MACHINE_OWNED | write after contract validation/host discovery |
-| DJ-CHAT-MUSIC-001E | StegMusic provider adapter | MERGED_INTO_CANONICAL_WORKSTREAM | continue through StegMusic handoff |
-
-### DJ-SR-001 inventory
-| Task ID | Destination | State | Validation | Next action |
-|---|---|---|---|---|
-| DJ-SR-001A | `docs/STREAMING_DEVELOPMENT_LOOP.md` | COMPLETE | design installed | maintain with implementation |
-| DJ-SR-001B | `contracts/release_cohort.schema.json` | COMPLETE | schema installed | add deterministic validator/tests |
-| DJ-SR-001C | `contracts/streaming_observation.schema.json` | COMPLETE | schema installed | add deterministic validator/tests |
-| DJ-SR-001D | chat/music-node profile binding | NOT_STARTED | none | bind StegMusic profile hash + gate state |
-| DJ-SR-001E | cohort/observation receipts | NOT_STARTED | none | install receipts and validation |
-| DJ-SR-001F | authorized analytics adapters | BLOCKED | none | identify authorized platform/distributor interfaces; use TV/TVC authority only |
-| DJ-SR-001G | controlled release experiment | BLOCKED | none | requires cleared artifacts, release authority, and live analytics path |
-
-## Contract behavior installed
-
-### `release_cohort.schema.json`
-Binds cohort ID, state family, candidate receipt IDs, release window, authorized destinations, hypothesis, controlled mutations, approved metrics, observation window, promotion rule, stop conditions, and authority flags.
-
-### `streaming_observation.schema.json`
-Binds each observation to a cohort, service, exact time window, authorized source reference, metric map, normalization data, and promotion recommendation. Missing/unavailable observations may be represented as `UNKNOWN`. `audience_response_grants_authority` is structurally fixed to `false`.
-
-## Cross-repository dependencies
-- Composition/generation: `StegVerse-Labs/StegMusic`.
-- Sympathetic-recognition contract: `StegVerse-Labs/StegMusic/contracts/sympathetic_recognition_profile.schema.json`.
-- UI host remains unresolved until a live repository handoff/contract identifies the canonical ecosystem chat page.
-- Deployment and secret authority remains outside browser code and must remain TV/TVC-governed.
-- Pertinent release/integration state must eventually propagate to `StegVerse-Labs/Site`, `GCAT-BCAT-Engine/Publisher`, `StegVerse-Labs/admissibility-wiki`, and `StegVerse-002/stegguardian-wiki` when the work reaches release/tagging state.
-
-## Validation
-Immediate local validation targets:
-
-```bash
-python -m json.tool contracts/release_cohort.schema.json >/dev/null
-python -m json.tool contracts/streaming_observation.schema.json >/dev/null
+HIL Site/TVC lane
+  owns HIL operational participant/runtime authority; StegDJ does not duplicate it
 ```
 
-Still required:
-- deterministic schema/policy validators and tests;
-- deterministic `UNKNOWN` handling;
-- receipt hash binding to state-family/profile IDs;
-- fail-closed rejection of BLOCKED/REVIEW_REQUIRED StegMusic candidates;
-- secret scanning proving no non-TV/TVC credentials are introduced;
-- fixtures proving strong audience response cannot auto-grant publication/licensing authority.
+Canonical upstream/downstream locations:
+- generation/research: `StegVerse-Labs/StegMusic/docs/STEGMUSIC_MIRROR_HANDOFF.md`;
+- provider precedence: `StegVerse-Labs/TVC/docs/PROVIDER_PRECEDENCE_MIRROR_HANDOFF.md`;
+- Site orchestration: `StegVerse-Labs/Site/docs/SITE_MIRROR_HANDOFF.md`;
+- HIL operations: `StegVerse-Labs/Site/docs/HIL_MIRROR_HANDOFF.md`;
+- sovereign local model/runtime: `StegVerse-002/micro-node-runtime/docs/SOVEREIGN_LOCAL_MODEL_RUNTIME_MIRROR_HANDOFF.md`.
 
-## Completion rules
-Work counts complete only when installed in the correct repository, committed/applied where authority permits, validated through the strongest available path, backed by inspectable evidence, and reflected here. A release appearing on a streaming service or receiving positive engagement is not itself activation proof.
+## Credential-clean validation automation
 
-## Percentages
+Both repository workflows were reconciled to avoid non-TV/TVC repository credentials:
 
-### DJ-CHAT-MUSIC-001 — preserved prior goal state
-- Developed files: 1/5 required control/integration files (20%).
-- Validation: 0/2 required validation layers (0%).
-- Integration: 0/3 required integration layers (0%).
-- Goal activation: 5%.
+- `.github/workflows/validate-chat-music-node.yml`
+- `.github/workflows/test-readiness.yml`
 
-### DJ-SR-001 — reset on new goal
-- Planned tracked implementation tasks: 7.
-- Completed tasks: 3/7 (43%).
-- Developed files: 3 substantive new files plus canonical handoff reconciliation.
-- Validation: schemas installed; deterministic validator/test execution remains unimplemented.
-- Upstream StegMusic recognition contract: installed; downstream binding remains.
-- Goal activation: 25%.
+They now use:
+- `permissions: {}`;
+- no `actions/checkout` or other `uses:` action;
+- explicit rejection of credential environment variables;
+- anonymous exact-`GITHUB_SHA` fetch of this public repository;
+- repository-local schema/test execution;
+- executable/browser credential-reference scan for the music/affective workflow.
 
-## Archive state
-DJ-SR-001 is not complete. The goal and remaining tasks are durable in this handoff, but active implementation remains appropriate until validators/tests, chat-node profile binding, receipts, and an authorized analytics/release experiment path are installed or explicitly transferred to active workers.
+A direct clone from the current chat execution container failed because that container could not resolve `github.com`; no credential workaround was used. Hosted workflow observation remains pending and is not inferred as PASS.
+
+## Durable task/receipt and released source claim
+
+- `tasks/DJ-SR-AFFECT-20260818.json`
+- `receipts/DJ-SR-AFFECT-20260818.json`
+
+The session source claim is released. Remaining continuations are explicitly owned:
+
+1. `DJ-SR-PUBLIC-VALIDATION` — MACHINE_OWNED by `.github/workflows/validate-chat-music-node.yml`; release condition is an exact-SHA successful credential-clean run with schema/tests/scan.
+2. `DJ-SR-SITE-CONSUMPTION` — MERGED into `StegVerse-Labs/Site/docs/SITE_MIRROR_HANDOFF.md`; release condition is non-conflicting Site admission plus live playback/observation evidence.
+3. `DJ-SR-OPTIONAL-PLATFORM-API` — OPTIONAL/BLOCKED until a platform API is specifically selected and TVC admits a scoped route. Bounded authorized export ingestion works without it.
+
+No continuation requires chat-held credentials or undocumented state.
+
+## Remaining release/activation evidence
+
+Source completion does **not** prove:
+- hosted validation success;
+- Site integration;
+- live playback;
+- real streaming release;
+- real audience observation;
+- affective experiment execution;
+- publication/licensing/custody authority.
+
+Those are separate machine/integration/human-authority evidence layers.
+
+## Propagation obligations
+
+No tag/release is authorized from source completion alone. After hosted validation, live Site integration, governed release/observation, and applicable custody/reconstruction evidence, evaluate propagation to:
+- `StegVerse-Labs/Site`;
+- `GCAT-BCAT-Engine/Publisher`;
+- `StegVerse-Labs/admissibility-wiki`;
+- `StegVerse-002/stegguardian-wiki`;
+- master-records/orchestration.
+
+## Validation commands
+
+Credential-clean hosted workflow executes:
+
+```bash
+python3 -m json.tool contracts/chat_music_node.schema.json >/dev/null
+python3 -m json.tool contracts/release_cohort.schema.json >/dev/null
+python3 -m json.tool contracts/streaming_observation.schema.json >/dev/null
+python3 -m json.tool contracts/affective_feedback_session.schema.json >/dev/null
+python3 -m unittest discover -s tests -v
+```
+
+## Completion accounting
+
+Bounded session source denominator: 12 required StegDJ source/control deliverables.
+
+```text
+developed source/control deliverables: 12/12
+scaffolding/stubs counted as complete: 0
+missing required source files: 0
+source task completion: 100%
+validation groups required: 3
+validation groups directly proven: 1/3 static/source inspection only; hosted exact-SHA and live integration remain pending
+integration groups required: 4
+integration groups complete/durably transferred: 4/4
+source goal activation: 72% (source complete; hosted/live evidence not complete)
+session-specific goal transfer/completion: 3/3
+```
+
+## Archive effect
+
+This repository no longer requires this chat for source implementation. Its remaining work is machine-owned or merged into canonical Site/TVC continuations. That fact alone does not archive the whole session; StegMusic and cross-repository session state determine final archival readiness.
