@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://stegverse.org/schemas/release_cohort.schema.json",
+  "title": "StegDJ Governed Release Cohort",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "cohort_id",
+    "state_family_id",
+    "candidate_receipt_ids",
+    "release_window",
+    "destinations",
+    "hypothesis",
+    "controlled_mutations",
+    "approved_metrics",
+    "minimum_observation_window_hours",
+    "promotion_rule",
+    "stop_conditions",
+    "authority"
+  ],
+  "properties": {
+    "cohort_id": {"type": "string", "minLength": 1},
+    "state_family_id": {"type": "string", "minLength": 1},
+    "sympathetic_recognition_profile_hash": {"type": "string", "minLength": 32},
+    "candidate_receipt_ids": {
+      "type": "array",
+      "items": {"type": "string", "minLength": 1},
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "release_window": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["start"],
+      "properties": {
+        "start": {"type": "string", "format": "date-time"},
+        "end": {"type": ["string", "null"], "format": "date-time"}
+      }
+    },
+    "destinations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["service", "authorization_ref"],
+        "properties": {
+          "service": {"type": "string", "minLength": 1},
+          "authorization_ref": {"type": "string", "minLength": 1},
+          "distributor": {"type": ["string", "null"]}
+        }
+      },
+      "minItems": 1
+    },
+    "canonical_project_identity": {"type": ["string", "null"]},
+    "hypothesis": {"type": "string", "minLength": 1},
+    "controlled_mutations": {"type": "array", "items": {"type": "string"}},
+    "approved_metrics": {"type": "array", "items": {"type": "string"}, "minItems": 1},
+    "minimum_observation_window_hours": {"type": "integer", "minimum": 1},
+    "promotion_rule": {"type": "string", "minLength": 1},
+    "stop_conditions": {"type": "array", "items": {"type": "string"}, "minItems": 1},
+    "privacy_restrictions": {"type": "array", "items": {"type": "string"}},
+    "state": {
+      "type": "string",
+      "enum": ["IDLE", "REQUESTED", "GENERATING", "REVIEW_REQUIRED", "READY", "RELEASED", "OBSERVING", "PROMOTED", "SUPERSEDED", "BLOCKED", "FAILED"]
+    },
+    "authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["publication_granted", "licensing_granted", "custody_granted"],
+      "properties": {
+        "publication_granted": {"type": "boolean"},
+        "licensing_granted": {"type": "boolean"},
+        "custody_granted": {"type": "boolean"}
+      }
+    }
+  }
+}
