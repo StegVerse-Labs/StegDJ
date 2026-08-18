@@ -16,6 +16,26 @@
     "music_length_ms": {"type": "integer", "minimum": 3000, "maximum": 600000},
     "target_state": {"type": "string", "minLength": 1, "maxLength": 256},
     "governance_scope": {"type": "string", "minLength": 1, "maxLength": 256},
+    "provider_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["primary"],
+      "properties": {
+        "primary": {"const": "STEGVERSE_NATIVE"},
+        "fallbacks": {
+          "type": "array",
+          "items": {"type": "string", "enum": ["ELEVENLABS"]},
+          "uniqueItems": true
+        }
+      }
+    },
+    "state_family_id": {"type": "string", "maxLength": 256},
+    "sympathetic_recognition_profile_hash": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "sympathetic_recognition_gate_status": {"type": "string", "enum": ["PASS", "REVIEW_REQUIRED", "BLOCKED"]},
+    "sympathetic_recognition_evidence_hash": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "affective_experiment_id": {"type": "string"},
+    "affective_observation_refs": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "consent_receipt_id": {"type": "string"},
     "stegmusic_endpoint": {"type": "string", "format": "uri-reference"},
     "composition_receipt_id": {"type": "string"},
     "generation_receipt_id": {"type": "string"},
@@ -25,11 +45,20 @@
     "error_code": {"type": "string"},
     "error_message": {"type": "string"},
     "provenance": {"type": "object"},
-    "compensation": {"type": "object"}
+    "compensation": {"type": "object"},
+    "authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "observation_grants_publication": {"const": false},
+        "affective_inference_grants_action": {"const": false},
+        "recognition_score_grants_licensing": {"const": false}
+      }
+    }
   },
   "allOf": [
     {
-      "if": {"properties": {"state": {"const": "READY"}}},
+      "if": {"properties": {"state": {"const": "READY"}}, "required": ["state"]},
       "then": {
         "required": ["generation_receipt_id", "content_type"],
         "anyOf": [
@@ -39,8 +68,16 @@
       }
     },
     {
-      "if": {"properties": {"state": {"enum": ["BLOCKED", "REVIEW_REQUIRED", "FAILED"]}}},
+      "if": {"properties": {"state": {"enum": ["BLOCKED", "REVIEW_REQUIRED", "FAILED"]}}, "required": ["state"]},
       "then": {"required": ["error_code", "error_message"]}
+    },
+    {
+      "if": {"properties": {"sympathetic_recognition_gate_status": {"const": "PASS"}}, "required": ["sympathetic_recognition_gate_status"]},
+      "then": {"required": ["sympathetic_recognition_profile_hash", "sympathetic_recognition_evidence_hash"]}
+    },
+    {
+      "if": {"properties": {"sympathetic_recognition_gate_status": {"enum": ["REVIEW_REQUIRED", "BLOCKED"]}}, "required": ["sympathetic_recognition_gate_status"]},
+      "then": {"properties": {"state": {"enum": ["REVIEW_REQUIRED", "BLOCKED"]}}}
     }
   ]
 }
