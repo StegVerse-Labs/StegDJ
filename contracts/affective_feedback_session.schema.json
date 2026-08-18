@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://stegverse.org/schemas/affective_feedback_session.schema.json",
+  "title": "StegDJ Affective Feedback Session",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "session_id",
+    "experiment_id",
+    "state_family_id",
+    "stimulus_receipt_ids",
+    "observation_refs",
+    "transition_sequence",
+    "consent_receipt_id",
+    "state",
+    "authority"
+  ],
+  "properties": {
+    "session_id": {"type": "string", "minLength": 1},
+    "experiment_id": {"type": "string", "minLength": 1},
+    "state_family_id": {"type": "string", "minLength": 1},
+    "stimulus_receipt_ids": {"type": "array", "items": {"type": "string", "minLength": 1}, "minItems": 1, "uniqueItems": true},
+    "observation_refs": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+    "transition_sequence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["from_state", "stimulus_receipt_id", "to_state", "confidence", "status"],
+        "properties": {
+          "from_state": {"type": "string", "minLength": 1},
+          "stimulus_receipt_id": {"type": "string", "minLength": 1},
+          "to_state": {"type": "string", "minLength": 1},
+          "confidence": {"type": "number", "minimum": 0, "maximum": 1},
+          "status": {"type": "string", "enum": ["UNRESOLVED", "CANDIDATE", "SUPPORTED", "REVIEW_REQUIRED", "BLOCKED"]},
+          "observation_refs": {"type": "array", "items": {"type": "string"}, "uniqueItems": true}
+        }
+      }
+    },
+    "consent_receipt_id": {"type": "string", "minLength": 1},
+    "orchestration_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "adaptation_allowed": {"type": "boolean"},
+        "maximum_adaptive_steps": {"type": "integer", "minimum": 0},
+        "blocked_inference_stops_session": {"const": true},
+        "review_required_stops_adaptation": {"const": true}
+      }
+    },
+    "state": {"type": "string", "enum": ["IDLE", "REQUESTED", "READY", "OBSERVING", "ADAPTING", "REVIEW_REQUIRED", "BLOCKED", "COMPLETE", "FAILED", "SUPERSEDED"]},
+    "authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["emotion_inference_grants_action_authority", "audience_response_grants_publication_authority", "sensor_observation_grants_licensing_authority"],
+      "properties": {
+        "emotion_inference_grants_action_authority": {"const": false},
+        "audience_response_grants_publication_authority": {"const": false},
+        "sensor_observation_grants_licensing_authority": {"const": false}
+      }
+    },
+    "notes": {"type": "array", "items": {"type": "string"}}
+  }
+}
