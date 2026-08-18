@@ -1,0 +1,26 @@
+{
+  "observation_id": "stream-observation-001",
+  "cohort_id": "cohort-state-family-001",
+  "service": "spotify",
+  "window_start": "2026-08-18T00:00:00Z",
+  "window_end": "2026-08-19T00:00:00Z",
+  "source_authorization_ref": "authorization://artist-analytics/export-001",
+  "source_kind": "ARTIST_ANALYTICS",
+  "metrics": {
+    "plays": 1200,
+    "saves": 84,
+    "repeat_listening": "UNKNOWN",
+    "completion_rate": "UNKNOWN"
+  },
+  "normalization": {
+    "release_age_hours": 24,
+    "estimated_exposure": "UNKNOWN",
+    "promotion_level": "UNKNOWN",
+    "method": "bounded authorized export; unavailable values remain UNKNOWN"
+  },
+  "promotion_recommendation": "CONTINUE_OBSERVING",
+  "audience_response_grants_authority": false,
+  "notes": [
+    "Fixture demonstrates provider-neutral ingestion; it does not require or authorize a Spotify API credential."
+  ]
+}
