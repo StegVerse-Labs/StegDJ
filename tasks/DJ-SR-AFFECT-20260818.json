@@ -6,9 +6,11 @@
   "branch": "main",
   "canonical_handoff": "docs/STEGDJ_MIRROR_HANDOFF.md",
   "originating_goal": "Use StegDJ with StegMusic to develop sympathetic recognition and subtle affective-response understanding using traditional streaming observations and consented multimodal sensors, with StegVerse primary and third parties fallback-only.",
-  "claimant": "current-session-stegdj-streaming-affective",
+  "claim_state": "SOURCE_COMPLETE_RELEASED_TO_MACHINE_OWNED_CONTINUATION",
+  "source_claimant": "NONE",
   "claim_created_at": "2026-08-18T10:47:00-05:00",
-  "claim_expires_or_releases_when": "All session-specific source requirements are implemented or transferred; credential-clean workflow observation, Site consumption, and optional external route authority have named durable owners and no unique chat-only execution remains.",
+  "claim_released_at": "2026-08-18T10:47:00-05:00",
+  "release_reason": "All session-specific StegDJ source requirements are implemented and durable. Remaining validation observation, Site consumption, and optional authenticated platform routes have named durable owners and require no chat-held information.",
   "credential_authority": "TV/TVC",
   "non_tv_tvc_secret_or_token_allowed": false,
   "provider_policy": {
@@ -23,7 +25,8 @@
     "credentialless_streaming_observation_ingest": "COMPLETE",
     "affective_feedback_contract": "COMPLETE",
     "affective_feedback_validator_tests": "COMPLETE_IMPLEMENTED",
-    "credential_clean_hosted_validation_workflow": "COMPLETE_INSTALLED_OBSERVATION_PENDING"
+    "credential_clean_hosted_validation_workflow": "COMPLETE_INSTALLED_OBSERVATION_PENDING",
+    "session_receipt": "receipts/DJ-SR-AFFECT-20260818.json"
   },
   "machine_owned_continuation": [
     {
@@ -45,9 +48,10 @@
       "owner": "StegVerse-Labs/TVC provider/credential authority",
       "surface": "StegVerse-Labs/TVC/docs/PROVIDER_PRECEDENCE_MIRROR_HANDOFF.md",
       "state": "OPTIONAL_BLOCKED_UNTIL_ADMITTED",
-      "release_condition": "A platform/distributor API is explicitly selected and TVC admits a scoped capability; bounded export ingestion remains available without this dependency."
+      "release_condition": "A platform/distributor API is explicitly selected and TVC admits a scoped capability; bounded authorized export ingestion remains available without this dependency."
     }
   ],
   "authority_effect": false,
-  "activation_effect": false
+  "activation_effect": false,
+  "archive_dependency_on_chat": false
 }
