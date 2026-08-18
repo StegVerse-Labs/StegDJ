@@ -74,6 +74,18 @@ class AffectiveFeedbackSessionTests(unittest.TestCase):
         with self.assertRaises(MODULE.AffectiveSessionError):
             MODULE.validate(value)
 
+    def test_transition_must_bind_declared_stimulus_receipt(self):
+        value = session()
+        value["transition_sequence"][0]["stimulus_receipt_id"] = "receipt://music/undeclared"
+        with self.assertRaises(MODULE.AffectiveSessionError):
+            MODULE.validate(value)
+
+    def test_transition_must_bind_declared_observation(self):
+        value = session()
+        value["transition_sequence"][0]["observation_refs"] = ["observation://undeclared"]
+        with self.assertRaises(MODULE.AffectiveSessionError):
+            MODULE.validate(value)
+
 
 if __name__ == "__main__":
     unittest.main()
